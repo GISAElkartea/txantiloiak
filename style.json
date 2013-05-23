@@ -67,19 +67,23 @@
         defaultHeader : ###Section###
 
   fontsAlias:
-    stdFont: Helvetica
-    stdBold: Helvetica-Bold
-    stdItalic: Helvetica-Oblique
-    stdBoldItalic: Helvetica-BoldOblique
-    stdSans: Helvetica
-    stdSansBold: Helvetica-Bold
-    stdSansItalic: Helvetica-Oblique
-    stdSansBoldItalic: Helvetica-BoldOblique
-    stdMono: Courier
-    stdMonoItalic: Courier-Oblique
-    stdMonoBold: Courier-Bold
-    stdMonoBoldItalic: Courier-BoldOblique
-    stdSerif: Times-Roman
+    stdFont: FreeSans
+    stdBold: FreeSansBold
+    stdItalic: FreeSansOblique
+    stdBoldItalic: FreeSansBoldOblique
+    stdSerif: FreeSerif
+    stdSerifBold: FreeSerifBold
+    stdSerifItalic: FreeSerifOblique
+    stdSerifBoldItalic: FreeSerifBoldOblique
+    stdSans: FreeSans
+    stdSansBold: FreeSansBold
+    stdSansItalic: FreeSansOblique
+    stdSansBoldItalic: FreeSansBoldOblique
+    stdMono: FreeMono
+    stdMonoItalic: FreeMonoOblique
+    stdMonoBold: FreeMonoBold
+    stdMonoBoldItalic: FreeMonoBoldOblique
+    heading: UnicaOne-Regular
 
   linkColor: navy
 
@@ -109,7 +113,7 @@
       allowOrphans: false
       hyphenation: false
       kerning: false
-      underline: false
+      underline: true
       strike: false
       commands: []
 
@@ -296,7 +300,7 @@
 
     title:
       parent: heading
-      fontName: stdBold
+      fontName: heading
       fontSize: 200%
       alignment: TA_CENTER
       keepWithNext: false
@@ -309,26 +313,27 @@
 
     heading1:
       parent: heading
-      fontName: stdBold
+      fontName: heading
       fontSize: 175%
+      underline: true
 
     heading2:
       parent: heading
-      fontName: stdBold
+      fontName: heading
       fontSize: 150%
 
     heading3:
       parent: heading
-      fontName: stdBoldItalic
+      fontName: heading
       fontSize: 125%
 
     heading4:
       parent: heading
-      fontName: stdBoldItalic
+      fontName: stdBold
 
     heading5:
       parent: heading
-      fontName: stdBoldItalic
+      fontName: stdBold
 
     heading6:
       parent: heading
