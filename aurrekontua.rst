@@ -20,10 +20,17 @@ GISA Elkartea
     |  **IFZ:G20889754** ###Page###/###Total### **Erreg. Zkia: 586194**
 
 
+.. raw:: pdf
+
+    PageBreak
+
+
 Sarrera
 =======
 
-GISA Elkartearen helburu nagusia software librea bultzatzea da, jendartean ezagutzera emanez eta bere erabilpena zabaltzeko mota ezberdineko egitasmoak aurrera eramanez. Teknologia libreak ezagutzera emateko ekitaldiak egiten ditugu: Ikastaroak, tailerrak, jardunaldiak, hitzaldiak eta abar. GNU/Linux eta programa libreen gaineko zerbitzuak eskaintzen ditugu, hauek instalatuz, garatuz eta mantentze lanak eginez. Elkarteko kide gehienok software askeko zerbitzuak eskaintzen ditugun profesionalak gara. Elkarteari eskaera bat heltzen zaionean kideen artean lana banatzen dugu. Eskatzen digutena burutzeko gure kideetako inor gai ez bada zerbitzua eskaintzen duten enpresak bilatzen laguntzen dugu. Gure azken helburua software librea alor guztietan egotea da. Elkarteak baita ere bertako kideek proposatutako ekintzak burutzen laguntzen du. Ekintzak aurrera eraman ahal izateko baliabideak eskuragarri uzten ditu: Proiektorea, kableria, ikasgela, Lagunak proiektu kudeatzailea, eta abar.
+GISA Elkartearen helburu nagusia software librea bultzatzea da, jendartean ezagutzera emanez eta bere erabilpena zabaltzeko mota ezberdineko egitasmoak aurrera eramanez. Teknologia libreak ezagutzera emateko ekitaldiak egiten ditugu: Ikastaroak, tailerrak, jardunaldiak, hitzaldiak eta abar. GNU/Linux eta programa libreen gaineko zerbitzuak eskaintzen ditugu, hauek instalatuz, garatuz eta mantentze lanak eginez. Elkarteko kide gehienok software askeko zerbitzuak eskaintzen ditugun profesionalak gara. 
+
+Elkarteari eskaera bat heltzen zaionean kideen artean lana banatzen dugu. Eskatzen digutena burutzeko gure kideetako inor gai ez bada zerbitzua eskaintzen duten enpresak bilatzen laguntzen dugu. Gure azken helburua software librea alor guztietan egotea da. Elkarteak baita ere bertako kideek proposatutako ekintzak burutzen laguntzen du. Ekintzak aurrera eraman ahal izateko baliabideak eskuragarri uzten ditu: Proiektorea, kableria, ikasgela, Lagunak proiektu kudeatzailea, eta abar.
 
 
 Webgunearen ezaugarriak
@@ -57,7 +64,11 @@ Ondorengo baldintzak betetzen dituen edozein zerbitzari (webfaction.com erabili 
 - Python 2.7 instalatuta.
 - Exim edo sendmail instalatuta.
 - Procmail instalatuta.
-- Domeinua
+
+
+Domeinua
+========
+
 - MX eta A edo NS erregistroak aldatzea baimentzen duen edozein domeinu erregistratzaile (internet.bs erabili ohi dugu).
 
 
