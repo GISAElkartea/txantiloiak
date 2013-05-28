@@ -1,0 +1,13 @@
+name: Budget
+
+templates:
+    eu: eu.rst
+        
+style: budget.style
+
+questionnaire:
+    project:
+        question: Projects name
+
+    repository:
+        question: Projects repository url

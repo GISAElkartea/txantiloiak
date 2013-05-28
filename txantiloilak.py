@@ -1,24 +1,63 @@
 from __future__ import unicode_literals
 import codecs
+import os
 
 from argparse import ArgumentParser
-from jinja2 import Environment, PackageLoader
+import jinja2
 import yaml
 
 
-jinja_env = Environment(loader=PackageLoader('txantiloilak', 'templates'))
+
+class Environment(object):
+    config_file_name = 'config.yaml'
+
+    def __init__(self, extra_configs=None):
+        self.extra_configs = extra_configs if extra_configs is not None else []
+
+    def get_document(self, name):
+        for document in self.documents:
+            if document.name.lower() == name.lower():
+                return document
+        raise Exception('No document with such name')
+
+    @property
+    def documents(self):
+        for config_path in self.extra_configs:
+            yield Document(config_path)
+        for dirpath, dirnames, filenames in os.walk('documents'):
+            if self.config_file_name in filenames:
+                config_path = os.path.join(dirpath, self.config_file_name)
+                yield Document(config_path)
 
 
-class Filler(object):
-    def fill(self, name, language):
-        template = self.get_template(name, language)
-        context = self.ask_questionnaire(name)
-        return template.render(**context)
+class Document(object):
+    def __init__(self, config_file):
+        self.base_dir = os.path.dirname(config_file)
+        with open(config_file) as config:
+            config = yaml.load(config)
+        for key in 'name', 'templates', 'style', 'questionnaire':
+            setattr(self, key, config.get(key))
 
-    def ask_questionnaire(self, name):
-        questionnaire = self.get_questionnaire(name)
+    def __unicode__(self):
+        return self.name
+
+    @property
+    def languages(self):
+        return self.templates.keys()
+        
+    def get_template(self, language=None):
+        if language is None:
+            if len(self.languages) == 1:
+                language = self.languages[0]
+            else:
+                raise Exception('Multiple possible languages, please select one')
+        filename = os.path.join(self.base_dir, self.templates[language])
+        with codecs.open(filename, encoding='utf-8') as template:
+            return jinja2.Template(template.read())
+
+    def ask_questionnaire(self):
         context = {}
-        for key, details in questionnaire.items():
+        for key, details in self.questionnaire.items():
             default = details.get('default', '')
 
             question = details['question']
@@ -33,39 +72,53 @@ class Filler(object):
             context[key] = answer
         return context
 
-    def get_questionnaire(self, name):
-        filename = 'questionnaires/{name}.yaml'.format(name=name)
-        with open(filename) as questionnaire:
-            return yaml.load(questionnaire)
-
-    def get_template(self, name, language):
-        filename = '{language}/{name}.rst'.format(
-                name=name, language=language)
-        return jinja_env.get_template(filename)
+    def fill(self, language=None):
+        template = self.get_template(language)
+        context = self.ask_questionnaire()
+        return template.render(**context)
         
 
-def get_parser():
-    parser = ArgumentParser(description='txantiloilak')
-    subparsers = parser.add_subparsers()
 
-    filling = subparsers.add_parser('fill')
-    filling.add_argument('template', metavar='NAME', type=str)
-    filling.add_argument('language', metavar='LANG', type=str)
-    filling.add_argument('output', metavar='FILENAME', type=str)
+class Command(object):
+    def __init__(self):
+        self.environment = Environment()
+        self.parser = self.get_parser()
 
-    rendering = subparsers.add_parser('render')
+    def get_parser(self):
+        parser = ArgumentParser(description='txantiloilak')
+        subparsers = parser.add_subparsers()
 
-    return parser
+        listing = subparsers.add_parser('list')
+        listing.set_defaults(func=self.list_documents)
 
-def main():
-    parser = get_parser()
-    args = parser.parse_args()
-    filler = Filler()
-    data = filler.fill('budget', 'eu')
-    with codecs.open(args.output, 'w', encoding='utf-8') as output:
-        output.write(data)
+        filling = subparsers.add_parser('fill')
+        filling.add_argument('document', metavar='NAME', type=str)
+        filling.add_argument('-l', '--language', metavar='LANG', type=str)
+        filling.add_argument('output', metavar='FILENAME', type=str)
+        filling.set_defaults(func=self.fill)
+
+        #rendering = subparsers.add_parser('render')
+
+        return parser
+
+    
+    def list_documents(self, args):
+        for document in self.environment.documents:
+            print document.name
+            print document.languages
+
+    def fill(self, args):
+        document = self.environment.get_document(args.document)
+        data = document.fill(args.language)
+        with codecs.open(args.output, 'w', encoding='utf-8') as output:
+            output.write(data)
+
+    def main(self):
+        args = self.parser.parse_args()
+        args.func(args)
 
 
 
 if __name__ == '__main__':
-    main()
+    command = Command()
+    command.main()

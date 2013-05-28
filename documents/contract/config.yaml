@@ -1,0 +1,19 @@
+name: Contract
+
+templates:
+    es: es.rst
+
+style: none
+
+questionnaire:
+    client:
+        question: Client's fully qualified name
+
+    client_address:
+        question: Client's address
+
+    client_id:
+        question: Client's ID
+
+    revenue:
+        question: Total revenue
