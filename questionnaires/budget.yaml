@@ -1,0 +1,5 @@
+project:
+    question: Projects name
+
+repository:
+    question: Projects repository url

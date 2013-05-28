@@ -1,6 +1,6 @@
-﻿=========
-Proiektua
-=========
+﻿=============
+{{ project }}
+=============
 
 
 -------------
@@ -12,7 +12,7 @@ GISA Elkartea
 
 .. header::
 
-    | **GISA Elkartea** Proiektua |logo|
+    | **GISA Elkartea** {{ project }} |logo|
     | 943345586 kontaktua@gisa-elkartea.org
 
 .. footer::
@@ -84,7 +84,7 @@ METODOLOGIA
 7. Guztia martxan jartzea.
 
 
-Gure proiektu kudeatzaileari ezker, prozesu guztiaren jarraipena egitea posible da. Horrela, gure lan erritmoa ikustea, aurkitzen ditugun arazoak behatzea, ematen ditugun pausoak jarraitzea eta intzidentzien berri ematea posiblea da. Horretarako http://github.com/GISAElkartea/proiektua helbidera sartzearekin nahikoa da.
+Gure proiektu kudeatzaileari ezker, prozesu guztiaren jarraipena egitea posible da. Horrela, gure lan erritmoa ikustea, aurkitzen ditugun arazoak behatzea, ematen ditugun pausoak jarraitzea eta intzidentzien berri ematea posiblea da. Horretarako {{ repository }} helbidera sartzearekin nahikoa da.
 
 
 AURREKONTUA
