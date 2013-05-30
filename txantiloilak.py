@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 import codecs
 import os
 
+from rst2pdf.createpdf import RstToPdf
 from argparse import ArgumentParser
 import jinja2
 import yaml
@@ -72,11 +73,20 @@ class Document(object):
             context[key] = answer
         return context
 
-    def fill(self, language=None):
+    def fill(self, output_file, language=None):
         template = self.get_template(language)
         context = self.ask_questionnaire()
-        return template.render(**context)
+        data = template.render(**context)
+        with codecs.open(output_file, 'w', encoding='utf-8') as output:
+            output.write(data)
         
+    def render(self, input_file, output_file):
+        style_file = os.path.join(self.base_dir, self.style)
+        with open(input_file) as input_file:
+            RstToPdf(stylesheets=[style_file]).createPdf(
+                    text=input_file.read(), 
+                    output=output_file)
+
 
 
 class Command(object):
@@ -92,12 +102,16 @@ class Command(object):
         listing.set_defaults(func=self.list_documents)
 
         filling = subparsers.add_parser('fill')
-        filling.add_argument('document', metavar='NAME', type=str)
+        filling.add_argument('document', metavar='DOCUMENT_TYPE', type=str)
         filling.add_argument('-l', '--language', metavar='LANG', type=str)
-        filling.add_argument('output', metavar='FILENAME', type=str)
+        filling.add_argument('output', metavar='OUTPUT', type=str)
         filling.set_defaults(func=self.fill)
 
-        #rendering = subparsers.add_parser('render')
+        rendering = subparsers.add_parser('render')
+        rendering.add_argument('document', metavar='DOCUMENT_TYPE', type=str)
+        rendering.add_argument('input', metavar='INPUT', type=str)
+        rendering.add_argument('-o', '--output', metavar='OUTPUT', type=str)
+        rendering.set_defaults(func=self.render)
 
         return parser
 
@@ -108,10 +122,20 @@ class Command(object):
             print document.languages
 
     def fill(self, args):
+        output = os.path.splitext(args.output)[0] + '.rst'
         document = self.environment.get_document(args.document)
-        data = document.fill(args.language)
-        with codecs.open(args.output, 'w', encoding='utf-8') as output:
-            output.write(data)
+        document.fill(args.output, language=args.language)
+
+        args.input = output
+        self.render(args)
+
+    def render(self, args):
+        output = args.output
+        if output is None:
+            output = args.input
+        output = os.path.splitext(output)[0] + '.pdf'
+        document = self.environment.get_document(args.document)
+        document.render(args.input, output)
 
     def main(self):
         args = self.parser.parse_args()
