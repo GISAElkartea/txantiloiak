@@ -44,7 +44,7 @@ class Document(object):
             setattr(self, key, config.get(key, None))
 
     def __unicode__(self):
-        return self.name
+        return '{} -- languages: {}'.format(self.name, ', '.join(self.languages))
 
     @property
     def languages(self):
@@ -122,8 +122,7 @@ class Command(object):
     
     def list_documents(self, args):
         for document in self.environment.documents:
-            print document.name
-            print document.languages
+            print(unicode(document))
 
     def fill(self, args):
         output = os.path.splitext(args.output)[0] + '.rst'
