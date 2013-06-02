@@ -10,12 +10,15 @@ setup(name='txantiloilak',
 """,
       classifiers=[], # Get strings from http://pypi.python.org/pypi?%3Aaction=list_classifiers
       keywords='',
-      author='',
-      author_email='',
+      author='Unai Zalakain (GISA)',
+      author_email='unai@gisa-elkartea.org',
       url='',
-      license='',
+      license='GPLv3',
       packages=find_packages(exclude=['ez_setup', 'examples', 'tests']),
       include_package_data=True,
+      package_data={
+          'txantiloilak': ['documents/*/*'],
+          },
       zip_safe=False,
       install_requires=[
           'rst2pdf',

@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 import codecs
 import os
+import inspect
 
 from rst2pdf.createpdf import RstToPdf
 from argparse import ArgumentParser
@@ -13,6 +14,9 @@ class Environment(object):
     config_file_name = 'config.yaml'
 
     def __init__(self, extra_configs=None):
+        current_file = inspect.getfile(inspect.currentframe())
+        self.base_dir = os.path.dirname(os.path.abspath(current_file))
+        self.document_dir = os.path.join(self.base_dir, 'documents')
         self.extra_configs = extra_configs if extra_configs is not None else []
 
     def get_document(self, name):
@@ -25,7 +29,7 @@ class Environment(object):
     def documents(self):
         for config_path in self.extra_configs:
             yield Document(config_path)
-        for dirpath, dirnames, filenames in os.walk('documents'):
+        for dirpath, dirnames, filenames in os.walk(self.document_dir):
             if self.config_file_name in filenames:
                 config_path = os.path.join(dirpath, self.config_file_name)
                 yield Document(config_path)
@@ -37,7 +41,7 @@ class Document(object):
         with open(config_file) as config:
             config = yaml.load(config)
         for key in 'name', 'templates', 'style', 'questionnaire':
-            setattr(self, key, config.get(key))
+            setattr(self, key, config.get(key, None))
 
     def __unicode__(self):
         return self.name
