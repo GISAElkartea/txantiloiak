@@ -142,7 +142,10 @@ class Command(object):
         args.func(args)
 
 
-
-if __name__ == '__main__':
+def main():
     command = Command()
     command.main()
+
+
+if __name__ == '__main__':
+    main()
